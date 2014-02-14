@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="customer">
+
+	<typeAlias alias="customerVO" type="vo.CustomerVO"/>
+	<resultMap class="customerVO" id="custResult">
+		<result property="id" column="id"/>
+		<result property="password" column="password"/>
+		<result property="name" column="name"/>
+		<result property="birth" column="birthday"/>
+		<result property="zipCode" column="zipcode"/>
+		<result property="job" column="job"/>
+		<result property="address1" column="addr1"/>
+		<result property="address2" column="addr2"/>
+		<result property="major" column="major"/>
+		<result property="homePhone" column="home_phone"/>
+		<result property="cellPhone" column="cell_phone"/>
+		<result property="isChrist" column="is_christ"/>
+		<result property="photoPath" column="photo"/>
+		<result property="prayTitle" column="pray"/>
+		<result property="deptCode" column="dept_code"/>
+		<result property="callingCode" column="call_code"/>
+		<result property="gradeCode" column="grd_code"/>
+	</resultMap>
+	
+	<insert id="register" parameterClass="customerVO">
+		insert into SY_CUST(
+			id,
+			password,
+			name,
+			birthday,
+			zipcode,
+			job,
+			addr1,
+			addr2,
+			major,
+			home_phone,
+			cell_phone,
+			is_christ,
+			pray,
+			dept_code,
+			call_code,
+			grd_code
+		) values(
+			#id#,
+			#password#,
+			#name#,
+			str_to_date(#birth#, get_format(date,'ISO')),
+			#zipCode#,
+			#job#,
+			#address1#,
+			#address2#,
+			#major#,
+			#homePhone#,
+			#cellPhone#,
+			#isChrist#,
+			#prayTitle#,
+			#deptCode#,
+			#callingCode#,
+			#gradeCode#
+		)
+	</insert>
+
+</sqlMap>

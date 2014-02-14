@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="EUC-KR" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE_APPENDER" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.SimpleLayout"/>
+    </appender>
+
+    <appender name="FILE_APPENDER" class="org.apache.log4j.FileAppender">
+        <param name="File" value="file-Log.txt"/>
+        <param name="Append" value="false"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %p - %m%n"/>
+        </layout>
+    </appender>
+
+  <appender name="QUERY_CONSOLE" class="org.apache.log4j.ConsoleAppender">
+  <layout class="org.apache.log4j.PatternLayout">
+   <param name="ConversionPattern" value="LOGGER MESSAGE [%p] - %C{1}.%M(%L) :QUERY: %m%n" />
+  </layout>
+
+ </appender>
+ <logger name="com.ibatis">
+  <level value="DEBUG" />
+  <appender-ref ref="QUERY_CONSOLE" />
+ </logger>
+ <logger name="java.sql.Connection">
+  <level value="DEBUG" />
+  <appender-ref ref="QUERY_CONSOLE" />
+ </logger>
+ <logger name="java.sql.Statement">
+  <level value="DEBUG" />
+  <appender-ref ref="QUERY_CONSOLE" />
+ </logger>
+ <logger name="java.sql.PreparedStatement">
+  <level value="DEBUG" />
+  <appender-ref ref="QUERY_CONSOLE" />
+ </logger>
+
+</log4j:configuration>

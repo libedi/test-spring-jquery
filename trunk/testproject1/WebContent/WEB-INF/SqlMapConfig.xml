@@ -5,4 +5,5 @@
 <sqlMapConfig>
 	<settings useStatementNamespaces="true"/>
 	<sqlMap resource="config/customer.xml"/>
+	<sqlMap resource="config/test.xml"/>
 </sqlMapConfig>

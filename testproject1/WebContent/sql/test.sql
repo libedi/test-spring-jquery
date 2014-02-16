@@ -5,14 +5,14 @@ create table SY_DEPT(
 	dept_code	smallint	auto_increment primary key,
 	dept_name	varchar(100)	not null
 );
-insert into sy_dept(dept_name) values('¿µ¾ÆºÎ');
-insert into sy_dept(dept_name) values('À¯Ä¡ºÎ');
-insert into sy_dept(dept_name) values('À¯³âºÎ');
-insert into sy_dept(dept_name) values('ÃÊµîºÎ');
-insert into sy_dept(dept_name) values('ÁßµîºÎ');
-insert into sy_dept(dept_name) values('°íµîºÎ');
-insert into sy_dept(dept_name) values('2ºÎÂù¾ç´ë');
-insert into sy_dept(dept_name) values('3ºÎÂù¾ç´ë');
+insert into sy_dept(dept_name) values('ï¿½ï¿½ï¿½Æºï¿½');
+insert into sy_dept(dept_name) values('ï¿½ï¿½Ä¡ï¿½ï¿½');
+insert into sy_dept(dept_name) values('ï¿½ï¿½ï¿½ï¿½ï¿½');
+insert into sy_dept(dept_name) values('ï¿½Êµï¿½ï¿½');
+insert into sy_dept(dept_name) values('ï¿½ßµï¿½ï¿½');
+insert into sy_dept(dept_name) values('ï¿½ï¿½ï¿½ï¿½');
+insert into sy_dept(dept_name) values('2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+insert into sy_dept(dept_name) values('3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
 select * from sy_dept;
 
 
@@ -22,17 +22,17 @@ create table SY_CALL(
 	call_name	varchar(100) not null,
 	primary key(call_code)
 );
-insert into sy_call(call_name) values('Ã»³â');
-insert into sy_call(call_name) values('Àüµµ»ç');
-insert into sy_call(call_name) values('°­µµ»ç');
-insert into sy_call(call_name) values('¸ñ»ç');
-insert into sy_call(call_name) values('È¸Àå');
-insert into sy_call(call_name) values('ºÎÈ¸Àå');
-insert into sy_call(call_name) values('¼­±â');
-insert into sy_call(call_name) values('ºÎ¼­±â');
-insert into sy_call(call_name) values('È¸°è');
-insert into sy_call(call_name) values('ºÎÈ¸°è');
-insert into sy_call(call_name) values('ÃÑ¹«');
+insert into sy_call(call_name) values('Ã»ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½ï¿½ï¿½');
+insert into sy_call(call_name) values('È¸ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½ï¿½È¸ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½ï¿½ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½Î¼ï¿½ï¿½ï¿½');
+insert into sy_call(call_name) values('È¸ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½ï¿½È¸ï¿½ï¿½');
+insert into sy_call(call_name) values('ï¿½Ñ¹ï¿½');
 select * from sy_call;
 
 
@@ -42,11 +42,11 @@ create table SY_GRADE(
 	grd_name	varchar(100) not null,
 	primary key(grd_code)
 );
-insert into sy_grade(grd_name) values('ÁØÈ¸¿ø');
-insert into sy_grade(grd_name) values('Á¤È¸¿ø');
-insert into sy_grade(grd_name) values('ÀÓ¿ø');
-insert into sy_grade(grd_name) values('¼ÒÀå');
-insert into sy_grade(grd_name) values('°ü¸®ÀÚ');
+insert into sy_grade(grd_name) values('ï¿½ï¿½È¸ï¿½ï¿½');
+insert into sy_grade(grd_name) values('ï¿½ï¿½È¸ï¿½ï¿½');
+insert into sy_grade(grd_name) values('ï¿½Ó¿ï¿½');
+insert into sy_grade(grd_name) values('ï¿½ï¿½ï¿½ï¿½');
+insert into sy_grade(grd_name) values('ï¿½ï¿½ï¿½ï¿½');
 select * from sy_grade;
 
 
@@ -95,21 +95,58 @@ insert into SY_CUST(
 		) values(
 			'libedi',
 			'libedi',
-			'¹Ú»óÁØ',
+			'ï¿½Ú»ï¿½ï¿½ï¿½',
 			str_to_date('1983-02-07', get_format(date,'ISO')),
 			'440709',
-			'ÀÏ',
-			'ÁÖ¼Ò1',
-			'ÁÖ¼Ò2',
-			'Á÷¾÷',
-			'ÁıÀüÈ­',
-			'Æù',
+			'ï¿½ï¿½',
+			'ï¿½Ö¼ï¿½1',
+			'ï¿½Ö¼ï¿½2',
+			'ï¿½ï¿½ï¿½ï¿½',
+			'ï¿½ï¿½ï¿½ï¿½È­',
+			'ï¿½ï¿½',
 			true,
-			'±âµµÁ¦¸ñ',
+			'ï¿½âµµï¿½ï¿½ï¿½ï¿½',
 			1,
 			2,
 			3
 		)
 delete from sy_cust;
 
-select str_to_date('2101-02-02',get_format(date,'ISO')) from dual
+select str_to_date('2101-02-02',get_format(date,'ISO')) from dual;
+
+
+-- FILE UPLOAD
+
+drop table SY_FILE;
+
+create table SY_FILE(
+	file_id		int				not null,
+	file_path	varchar(255)	not null,
+	upload_date	date,
+	primary key(file_id)
+);
+
+-- Sequence ìƒì„±
+drop table FILE_SEQ_GEN;
+create table FILE_SEQ_GEN(
+	seq_val		int		not null
+);
+insert into FILE_SEQ_GEN values(0);
+update FILE_SEQ_GEN set seq_val = 1;
+select seq_val from FILE_SEQ_GEN;
+
+select * from SY_FILE;
+
+select file_id as fileId, file_path as filePath from SY_FILE
+
+
+
+
+
+
+
+
+
+
+
+

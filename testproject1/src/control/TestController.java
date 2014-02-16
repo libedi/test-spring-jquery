@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import service.TestService;
 import util.FileUtil;
 import util.ImageUtil;
 
@@ -20,7 +22,12 @@ import util.ImageUtil;
 public class TestController extends MultiActionController {
 	
 	private Log log = LogFactory.getLog(getClass());
-		
+	private TestService testService;
+	
+	public void setTestService(TestService testService) {
+		this.testService = testService;
+	}
+
 	public ModelAndView test(HttpServletRequest request, HttpServletResponse response){
 //		System.out.println("start");
 		log.debug("test class start");
@@ -105,7 +112,11 @@ public class TestController extends MultiActionController {
 		
 		try {
 			new ImageUtil().createThumbnail(filePath, 500, 0);
+			this.testService.fileUpload(filePath);
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -131,6 +142,13 @@ public class TestController extends MultiActionController {
 		log.debug("ajax file upload start");
 		
 		String filePath = FileUtil.fileUploadController(req, "image", "upload");
+		
+		try {
+			this.testService.fileUpload(filePath);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		log.debug("upload path : " + filePath);
 		

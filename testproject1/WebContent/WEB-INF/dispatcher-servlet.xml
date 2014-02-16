@@ -58,8 +58,8 @@
 	<property name="methodNameResolver">
 		<ref bean="methodNameResolver"/>
 	</property>
+	<property name="testService" ref="testService"/>
 </bean>
-
 <bean name="/cust.do" class="control.CustomerController">
 	<property name="methodNameResolver">
 		<ref bean="methodNameResolver"/>
@@ -70,10 +70,16 @@
 <bean id="customerDao" class="dao.CustomerDaoImpl">
 	<property name="sqlMapClient" ref="sqlMapClient"/>
 </bean>
+<bean id="testDao" class="dao.TestDaoImpl">
+	<property name="sqlMapClient" ref="sqlMapClient"></property>
+</bean>
 
 <!-- Service -->
 <bean id="customerService" class="service.CustomerServiceImpl">
 	<property name="customerDao" ref="customerDao"></property>
+</bean>
+<bean id="testService" class="service.TestServiceImpl">
+	<property name="testDao" ref="testDao"></property>
 </bean>
 
 

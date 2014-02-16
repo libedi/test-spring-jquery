@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="test">
+	<resultMap class="java.util.HashMap" id="mapResult">
+		<result property="fileId" column="file_id"/>
+		<result property="filePath" column="file_path"/>
+	</resultMap>
+	<select id="getId" resultClass="int">
+		select seq_val from FILE_SEQ_GEN
+	</select>
+	<update id="updateId">
+		update FILE_SEQ_GEN set seq_val = seq_val+1
+	</update>
+	<insert id="fileUpload" parameterClass="java.util.HashMap">
+		insert into SY_FILE(file_id, file_path, upload_date) values(#seq#, #filePath#, now())
+	</insert>
+	<select id="getFileInfo" resultClass="java.util.HashMap">
+		select file_id as fileId, file_path as filePath
+		from SY_FILE
+		where file_id=#value#
+	</select>
+</sqlMap>

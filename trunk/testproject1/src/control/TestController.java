@@ -2,6 +2,8 @@ package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import service.TestService;
 import util.FileUtil;
 import util.ImageUtil;
+import vo.FileVO;
 
 
 public class TestController extends MultiActionController {
@@ -158,5 +161,31 @@ public class TestController extends MultiActionController {
 		return mv;
 	}
 	
+	
+	/**
+	 * 파일 리스트 가져오기
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView getFileList(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		List<FileVO> resultList = new ArrayList<FileVO>();
+		
+		int page = Integer.parseInt( req.getParameter("page") );
+		
+		try {
+			resultList = this.testService.getFileList(page);
+			mv.addObject("list", resultList);
+			mv.setViewName("file_download");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mv;
+	}
 	
 }

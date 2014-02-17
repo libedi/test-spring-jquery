@@ -1,7 +1,10 @@
 package dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+
+import vo.FileVO;
 
 public interface TestDao {
 
@@ -27,5 +30,13 @@ public interface TestDao {
 	 * @throws SQLException
 	 */
 	public Map getFileInfo(int fileId) throws SQLException;
+
+	/**
+	 * 파일 리스트 가져오기
+	 * @param page
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<FileVO> getFileList(int page) throws SQLException;
 
 }

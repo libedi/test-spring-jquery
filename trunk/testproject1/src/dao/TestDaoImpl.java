@@ -2,16 +2,18 @@ package dao;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
+import vo.FileVO;
+
 public class TestDaoImpl extends SqlMapClientDaoSupport implements TestDao {
 
 	private Log log = LogFactory.getLog(getClass());
-	
 	
 	@Override
 	public void fileUpload(Map param) throws SQLException {
@@ -38,6 +40,12 @@ public class TestDaoImpl extends SqlMapClientDaoSupport implements TestDao {
 		Map result = new HashMap();
 		result = (Map)this.getSqlMapClientTemplate().queryForObject("test.getFileInfo", fileId);
 		return result;
+	}
+
+	@Override
+	public List<FileVO> getFileList(int page) throws SQLException {
+		// TODO Auto-generated method stub
+		return (List<FileVO>)this.getSqlMapClientTemplate().queryForList("test.getFileList");
 	}
 
 }

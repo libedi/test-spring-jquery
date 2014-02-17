@@ -34,6 +34,7 @@ if( navigator.platform  ){
 	<a href="json_test.jsp">JSON 테스트</a>
 	<a href="jquery_test.jsp">JQuery 테스트</a>
 	<a href="file_upload.jsp">File업로드 테스트</a>
+	<a href="test.do?mode=getFileList&page=1">File 다운로드 테스트</a>
 	
 </body>
 </html>

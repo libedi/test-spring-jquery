@@ -3,10 +3,6 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="test">
-	<resultMap class="java.util.HashMap" id="mapResult">
-		<result property="fileId" column="file_id"/>
-		<result property="filePath" column="file_path"/>
-	</resultMap>
 	<select id="getId" resultClass="int">
 		select seq_val from FILE_SEQ_GEN
 	</select>
@@ -16,9 +12,23 @@
 	<insert id="fileUpload" parameterClass="java.util.HashMap">
 		insert into SY_FILE(file_id, file_path, upload_date) values(#seq#, #filePath#, now())
 	</insert>
+	
+	<resultMap class="vo.FileVO" id="fileVo">
+		<result property="fileId" column="file_id" javaType="int"/>
+		<result property="filePath" column="file_path" javaType="java.lang.String"/>
+		<result property="uploadDate" column="upload_date" javaType="java.util.Date"/>
+	</resultMap>
 	<select id="getFileInfo" resultClass="java.util.HashMap">
 		select file_id as fileId, file_path as filePath
 		from SY_FILE
 		where file_id=#value#
+	</select>
+	<select id="getFileList" resultMap="fileVo">
+		select
+			file_id,
+			file_path,
+			upload_date
+		from
+			SY_FILE
 	</select>
 </sqlMap>

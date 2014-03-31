@@ -65,12 +65,21 @@
 		<ref bean="methodNameResolver"/>
 	</property>
 </bean>
+<bean name="/board.do" class="control.BoardController">
+	<property name="methodNameResolver">
+		<ref bean="methodNameResolver"/>
+	</property>
+	<property name="boardService" ref="boardService"></property>
+</bean>
 
 <!-- DAO -->
 <bean id="customerDao" class="dao.CustomerDaoImpl">
 	<property name="sqlMapClient" ref="sqlMapClient"/>
 </bean>
 <bean id="testDao" class="dao.TestDaoImpl">
+	<property name="sqlMapClient" ref="sqlMapClient"></property>
+</bean>
+<bean id="boardDao" class="dao.BoardDaoImpl">
 	<property name="sqlMapClient" ref="sqlMapClient"></property>
 </bean>
 
@@ -81,7 +90,8 @@
 <bean id="testService" class="service.TestServiceImpl">
 	<property name="testDao" ref="testDao"></property>
 </bean>
-
-
+<bean id="boardService" class="service.BoardServiceImpl">
+	<property name="boardDao" ref="boardDao"></property>
+</bean>
 
 </beans>

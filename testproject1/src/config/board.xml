@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="board">
+	<resultMap class="vo.BoardVO" id="getList">
+		<result property="id" 		column="list_id" 	javaType="int"/>
+		<result property="title" 	column="title" 		javaType="java.lang.String"/>
+		<result property="writer" 	column="writer" 	javaType="java.lang.String"/>
+		<result property="createDate" column="crt_date" javaType="java.util.Date"/>
+		<result property="modifyDate" column="mdf_date" javaType="java.util.Date"/>
+		<result property="clickView"  column="click_view" javaType="int"/>
+	</resultMap>
+	
+	<select id="getList" resultMap="getList">
+		SELECT
+			list_id,
+			title,
+			writer,
+			crt_date,
+			mdf_date,
+			click_view
+		FROM SY_BOARD
+		ORDER BY list_id DESC
+	</select>
+	
+	<insert id="register" parameterClass="vo.BoardVO">
+		INSERT INTO SY_BOARD(
+			title,
+			writer,
+			text_area,
+			crt_date,
+			mdf_date
+		) VALUES (
+			#title#,
+			#writer#,
+			#text#,
+			now(),
+			now()
+		)
+	</insert>
+</sqlMap>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test jqPlot</title>
+<link type="text/css" rel="stylesheet" href="css/jquery.jqplot.css" />
+<!-- [if lt IE 9><script type="text/javascript" src="excanvas.min.js"></script><![endif] -->
+<script type="text/javascript" src="script/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="script/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="script/plugin/jqplot.logAxisRenderer.min.js"></script>
+<script type="text/javascript" src="script/plugin/jqplot.barRenderer.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	$.jqplot('chartdiv', [[[1, 2], [3, 5.12], [5, 13.1], [7, 33.6], [9, 85.9], [11, 219.9]]], {
+		title : '테스트 jqPlot 그래프',
+		axes : {yaxis:{}},
+		series : [{renderer:$.jqplot.BarRenderer}]
+	});
+	
+});
+</script>
+</head>
+<body>
+<div id="chartdiv" style="height:400px;width:300px;"></div>
+</body>
+</html>

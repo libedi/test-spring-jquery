@@ -18,7 +18,7 @@ for(var word in mobileKeyWords){
 }
 */
 // 모바일 페이지로 이동 (platform 여부 판단)
-alert(navigator.platform);
+//alert(navigator.platform);
 var filter = "win16|win32|win64|mac|macintel";
 if( navigator.platform  ){
     if( filter.indexOf(navigator.platform.toLowerCase())<0 ){
@@ -35,6 +35,7 @@ if( navigator.platform  ){
 	<a href="jquery_test.jsp">JQuery 테스트</a>
 	<a href="file_upload.jsp">File업로드 테스트</a>
 	<a href="test.do?mode=getFileList&page=1">File 다운로드 테스트</a>
+	<a href="board.do?mode=getBoardList&page=1">게시판 테스트</a>
 	
 </body>
 </html>

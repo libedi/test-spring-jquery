@@ -139,6 +139,20 @@ select * from SY_FILE;
 
 select file_id as fileId, file_path as filePath from SY_FILE
 
+-- 게시판 테이블
+drop table SY_BOARD;
+create table SY_BOARD(
+	list_id		int				not null	auto_increment,
+	title		varchar(255)	not null,
+	text_area	text			not null,
+	writer		varchar(100)	not null,
+	crt_date	date			not null,
+	mdf_date	date			not null,
+	click_view	int				unsigned	default 0,
+	primary key(list_id)
+);
+
+select * from sy_board;
 
 
 

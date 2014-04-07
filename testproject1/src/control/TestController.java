@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import service.TestService;
 import util.FileUtil;
 import util.ImageUtil;
+import util.TestProperty;
 import vo.FileVO;
 
 
@@ -184,6 +185,20 @@ public class TestController extends MultiActionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return mv;
+	}
+	
+	public ModelAndView getProps(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		TestProperty test = new TestProperty();
+		
+		String p = test.getProperty("TEST_IP");
+		System.out.println(p);
+		
+		mv.addObject("ip", p);
+		mv.setViewName("view_ip");
 		
 		return mv;
 	}

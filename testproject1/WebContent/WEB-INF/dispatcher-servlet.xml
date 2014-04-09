@@ -94,4 +94,11 @@
 	<property name="boardDao" ref="boardDao"></property>
 </bean>
 
+<!-- Mail -->
+<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="mail.gmail.com"></property>
+	<property name="port" value="25"></property>
+	<property name="defaultEncoding" value="UTF-8"></property>
+</bean>
+
 </beans>

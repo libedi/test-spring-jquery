@@ -53,12 +53,48 @@
 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 </bean>
 
+<!-- Mail -->
+<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.gmail.com"></property>
+	<property name="port" value="587"></property>
+	<property name="defaultEncoding" value="UTF-8"></property>
+	<property name="username" value="libedi@gmail.com"></property>
+	<property name="password" value="qkrtkdwns8327"></property>
+	<property name="javaMailProperties">
+		<props>
+			<prop key="mail.smtp.auth">true</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+		</props>
+	</property>
+</bean>
+<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="smtp.gmail.com"></property>
+	<property name="port" value="587"></property>
+	<property name="defaultEncoding" value="UTF-8"></property>
+	<property name="username" value="libedi@gmail.com"></property>
+	<property name="password" value="qkrtkdwns8327"></property>
+	<property name="javaMailProperties">
+		<props>
+			<prop key="mail.smtp.auth">true</prop>
+			<prop key="mail.smtp.starttls.enable">true</prop>
+		</props>
+	</property>
+</bean>
+<bean id="mailUtil" class="util.MailUtil" >
+	<property name="mailSender" ref="mailSender"></property>
+</bean>
+<bean id="mimeMailUtil" class="util.MimeMailUtil">
+	<property name="mailSender" ref="javaMailSender"></property>
+</bean>
+
 <!-- Controller -->
 <bean name="/test.do" class="control.TestController">
 	<property name="methodNameResolver">
 		<ref bean="methodNameResolver"/>
 	</property>
 	<property name="testService" ref="testService"/>
+	<property name="mailUtil" ref="mailUtil"></property>
+	<property name="mimeMailUtil" ref="mimeMailUtil"></property>
 </bean>
 <bean name="/cust.do" class="control.CustomerController">
 	<property name="methodNameResolver">
@@ -92,13 +128,6 @@
 </bean>
 <bean id="boardService" class="service.BoardServiceImpl">
 	<property name="boardDao" ref="boardDao"></property>
-</bean>
-
-<!-- Mail -->
-<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<property name="host" value="mail.gmail.com"></property>
-	<property name="port" value="25"></property>
-	<property name="defaultEncoding" value="UTF-8"></property>
 </bean>
 
 </beans>

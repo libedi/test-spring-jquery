@@ -19,17 +19,28 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import service.TestService;
 import util.FileUtil;
 import util.ImageUtil;
+import util.MailUtil;
+import util.MimeMailUtil;
 import util.TestProperty;
 import vo.FileVO;
+import vo.MailVO;
 
 
 public class TestController extends MultiActionController {
 	
 	private Log log = LogFactory.getLog(getClass());
 	private TestService testService;
+	private MailUtil mailUtil;
+	private MimeMailUtil mimeMailUtil;
 	
 	public void setTestService(TestService testService) {
 		this.testService = testService;
+	}
+	public void setMailUtil(MailUtil mailUtil) {
+		this.mailUtil = mailUtil;
+	}
+	public void setMimeMailUtil(MimeMailUtil mimeMailUtil) {
+		this.mimeMailUtil = mimeMailUtil;
 	}
 
 	public ModelAndView test(HttpServletRequest request, HttpServletResponse response){
@@ -199,6 +210,52 @@ public class TestController extends MultiActionController {
 		
 		mv.addObject("ip", p);
 		mv.setViewName("view_ip");
+		
+		return mv;
+	}
+	
+	/**
+	 * 메일 발송 테스트
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView sendMail(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		MailVO paramMail = new MailVO();
+		paramMail.setSubject("테스트 메일");
+		paramMail.setText("테스트로 보내는 메일입니다.");
+		paramMail.setFromEmail("libedi@gmail.com");
+		paramMail.setToEmail("libedi@gmail.com");
+		
+		mailUtil.sendEmail(paramMail);
+		
+		mv.setViewName("mail_ok");
+		
+		return mv;
+	}
+	
+	/**
+	 * 메일 발송 테스트
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView sendMimeMail(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		MailVO paramMail = new MailVO();
+		paramMail.setSubject("테스트 메일");
+		paramMail.setText("테스트로 보내는 메일입니다.");
+		paramMail.setFromEmail("libedi@gmail.com");
+		paramMail.setToEmail("libedi@nate.com");
+		
+		mimeMailUtil.sendMail(paramMail);
+		
+		mv.setViewName("mail_ok");
 		
 		return mv;
 	}

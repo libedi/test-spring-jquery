@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Chart TEST :: Nwagon</title>
+
+<link type="text/css" rel="stylesheet" href="nwagon/Nwagon.min.css">
+<script type="text/javascript" src="nwagon/Nwagon.js"></script>
+<script type="text/javascript" src="script/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	chartLoad();
+});
+function chartLoad(){
+	var options1 = {
+			'legend':{
+				names:['14/1', '14/2', '14/3', '14/4', '14/5',]
+			},
+			'dataset':{
+				title:'시은소 4부예배 출석현황',
+				values:[[60, 10], [65, 12], [64, 9], [73, 11], [85, 15]],
+				colorset:['#3366cc', '#dc3912'],
+				fields:['청년', '성도']
+			},
+			'chartDiv':'line2',
+			'chartType':'stacked_column',
+			'chartSize':{width:700, height:300},
+			'minValue':20,
+			'maxValue':120,
+			'increment':10
+	};
+	Nwagon.chart(options1);
+	
+	var options = {
+			'legend':{
+				names: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',]
+					},
+			'dataset':{
+				title:'Playing time per day', 
+				values: [[56,76], [58,66], [60,62], [58,70], [85, 76], [86,83], [82, 73], [77,66], [87,66], [49,56], [58,76], [85, 76], [56,83], [56, 83], [45, 34]],
+				colorset: ['#3366cc', '#dc3912'],
+				fields:['Company A', 'Company B']
+			},
+			'chartDiv' : 'line1',
+			'chartType' : 'line',
+			'leftOffsetValue': 40,
+			'bottomOffsetValue': 60,
+			'chartSize' : {width:700, height:300},
+			'minValue' :20,
+			'maxValue' : 100,
+			'increment' : 20
+		};
+
+		Nwagon.chart(options);
+}
+</script>
+</head>
+<body>
+<div id="line1"></div>
+<div id="line2"></div>
+</body>
+</html>

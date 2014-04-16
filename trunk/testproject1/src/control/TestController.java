@@ -39,14 +39,14 @@ import vo.MailVO;
 public class TestController extends MultiActionController {
 	
 	private Log log = LogFactory.getLog(getClass());
-	private TestService testService;
+//	private TestService testService;
 	private MailUtil mailUtil;
 	private MimeMailUtil mimeMailUtil;
 	private static int KEY_SIZE = 1024;
 	
-	public void setTestService(TestService testService) {
-		this.testService = testService;
-	}
+//	public void setTestService(TestService testService) {
+//		this.testService = testService;
+//	}
 	public void setMailUtil(MailUtil mailUtil) {
 		this.mailUtil = mailUtil;
 	}
@@ -122,94 +122,94 @@ public class TestController extends MultiActionController {
 		return mv;
 	}
 	
-	
-	/**
-	 * 
-	 * @param req
-	 * @param res
-	 * @return
-	 */
-	public ModelAndView fileUpload(HttpServletRequest req, HttpServletResponse res){
-		ModelAndView mv = new ModelAndView();
-		
-		log.debug("file Upload Start");
-		
-		String filePath = FileUtil.fileUploadController(req, "image", "upload");
-		
-		try {
-			new ImageUtil().createThumbnail(filePath, 500, 0);
-			this.testService.fileUpload(filePath);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		log.debug("upload path : " + filePath);
-		
-		mv.addObject("msg", filePath);
-		mv.setViewName("upload_ok");
-		
-		return mv;
-	}
-	
-	/**
-	 * Ajax 파일 업로드
-	 * 
-	 * @param req
-	 * @param res
-	 * @return
-	 */
-	public ModelAndView ajaxFileUpload(HttpServletRequest req, HttpServletResponse res){
-		ModelAndView mv = new ModelAndView();
-		
-		log.debug("ajax file upload start");
-		
-		String filePath = FileUtil.fileUploadController(req, "image", "upload");
-		
-		try {
-			this.testService.fileUpload(filePath);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		log.debug("upload path : " + filePath);
-		
-		mv.addObject("resultValue", filePath);
-		mv.setViewName("result");
-		
-		return mv;
-	}
-	
-	
-	/**
-	 * 파일 리스트 가져오기
-	 * 
-	 * @param req
-	 * @param res
-	 * @return
-	 */
-	public ModelAndView getFileList(HttpServletRequest req, HttpServletResponse res){
-		ModelAndView mv = new ModelAndView();
-		
-		List<FileVO> resultList = new ArrayList<FileVO>();
-		
-		int page = Integer.parseInt( req.getParameter("page") );
-		
-		try {
-			resultList = this.testService.getFileList(page);
-			mv.addObject("list", resultList);
-			mv.setViewName("file_download");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return mv;
-	}
+//	
+//	/**
+//	 * 
+//	 * @param req
+//	 * @param res
+//	 * @return
+//	 */
+//	public ModelAndView fileUpload(HttpServletRequest req, HttpServletResponse res){
+//		ModelAndView mv = new ModelAndView();
+//		
+//		log.debug("file Upload Start");
+//		
+//		String filePath = FileUtil.fileUploadController(req, "image", "upload");
+//		
+//		try {
+//			new ImageUtil().createThumbnail(filePath, 500, 0);
+//			this.testService.fileUpload(filePath);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		log.debug("upload path : " + filePath);
+//		
+//		mv.addObject("msg", filePath);
+//		mv.setViewName("upload_ok");
+//		
+//		return mv;
+//	}
+//	
+//	/**
+//	 * Ajax 파일 업로드
+//	 * 
+//	 * @param req
+//	 * @param res
+//	 * @return
+//	 */
+//	public ModelAndView ajaxFileUpload(HttpServletRequest req, HttpServletResponse res){
+//		ModelAndView mv = new ModelAndView();
+//		
+//		log.debug("ajax file upload start");
+//		
+//		String filePath = FileUtil.fileUploadController(req, "image", "upload");
+//		
+//		try {
+//			this.testService.fileUpload(filePath);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		log.debug("upload path : " + filePath);
+//		
+//		mv.addObject("resultValue", filePath);
+//		mv.setViewName("result");
+//		
+//		return mv;
+//	}
+//	
+//	
+//	/**
+//	 * 파일 리스트 가져오기
+//	 * 
+//	 * @param req
+//	 * @param res
+//	 * @return
+//	 */
+//	public ModelAndView getFileList(HttpServletRequest req, HttpServletResponse res){
+//		ModelAndView mv = new ModelAndView();
+//		
+//		List<FileVO> resultList = new ArrayList<FileVO>();
+//		
+//		int page = Integer.parseInt( req.getParameter("page") );
+//		
+//		try {
+//			resultList = this.testService.getFileList(page);
+//			mv.addObject("list", resultList);
+//			mv.setViewName("file_download");
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return mv;
+//	}
 	
 	public ModelAndView getProps(HttpServletRequest req, HttpServletResponse res){
 		ModelAndView mv = new ModelAndView();
@@ -296,6 +296,10 @@ public class TestController extends MultiActionController {
 		String publicKeyModulus = publicSpec.getModulus().toString(16);
 		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
 		
+		log.debug("Public Key Modulus : " + publicKeyModulus);
+		log.debug("Public Key Exponent : " + publicKeyExponent);
+		
+		
 		mv.addObject("publicKeyModulus", publicKeyModulus);
 		mv.addObject("publicKeyExponent", publicKeyExponent);
 		mv.setViewName("loginForm_rsa");
@@ -312,11 +316,30 @@ public class TestController extends MultiActionController {
 	 */
 	public ModelAndView login(HttpServletRequest req, HttpServletResponse res){
 		ModelAndView mv = new ModelAndView();
+
+		String result = "";
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
 		
 		HttpSession session = req.getSession(true);
-		String privateKey = (String) session.getAttribute("__rsaPrivateKey__");
+		PrivateKey privateKey = (PrivateKey) session.getAttribute("__rsaPrivateKey__");
+		// 세션에서 개인키값을 제거 - 개인키 값이 유지되는 것을 방지
+		session.removeAttribute("__rsaPrivateKey__");
+		log.debug("username : "+ req.getParameter("securedUsername"));
+		String decryptedUsername = RSAUtil.decrypt(req.getParameter("securedUsername"), privateKey);
+		String decryptedPassword = RSAUtil.decrypt(req.getParameter("securedPassword"), privateKey);
 		
-//		RSAUtil.decrypt(encryptedBase64Text, privateKey)
+		log.debug("Decrypted Username : " + decryptedUsername);
+		log.debug("Decrypted Password : " + decryptedPassword);
+		
+		if(username.equals(decryptedUsername) && password.equals(decryptedPassword)){
+			result = "match";
+		} else {
+			result = "dismatch";
+		}
+		
+		mv.addObject("result", result);
+		mv.setViewName("login_rsa");
 		
 		return mv;
 	}

@@ -4,7 +4,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class EcryptUtil {
-	
+
+	/**
+	 * SHA1 암호화
+	 * 
+	 * @param pw
+	 * @return
+	 */
 	public String encryptToSha1(String pw){
 		byte[] ba = pw.getBytes();
 		MessageDigest md = null;
@@ -38,5 +44,4 @@ public class EcryptUtil {
 		System.out.println(enc.length());
 		System.out.println(enc.equals("7ce0359f12857f2a90c7de465f40a95f1cb5da9"));
 	}
-	
 }

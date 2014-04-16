@@ -348,6 +348,10 @@ public class TestController extends MultiActionController {
 		String decryptedUsername = null;
 		String decryptedPassword = null;
 		
+		if(privateKey == null){
+			throw new RuntimeException("Do not find private key.");
+		}
+		
 		try {
 			decryptedUsername = RSAUtil.decrypt(req.getParameter("securedUsername"), privateKey);
 			decryptedPassword = RSAUtil.decrypt(req.getParameter("securedPassword"), privateKey);

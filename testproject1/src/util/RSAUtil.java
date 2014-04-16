@@ -31,6 +31,12 @@ public class RSAUtil {
 	private static final String RSA = "RSA";
 	private static final int KEY_SIZE = 1024;
 	
+	/**
+	 * generatorKeyPair()
+	 * 
+	 * @return	KeyPair 객체
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static KeyPair generatorKeyPair() throws NoSuchAlgorithmException{
 		KeyPair keyPair = null;
 		
@@ -56,10 +62,10 @@ public class RSAUtil {
 	 */
 	public static String encrypt(String text, PublicKey publicKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException{
 		String encryptedText = null;
-		byte[] bytes = text.getBytes();
+		byte[] bytes = text.getBytes("UTF-8");
 		Cipher cipher = Cipher.getInstance(RSA);
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		encryptedText = new String(Base64.encodeBase64(cipher.doFinal(bytes)), "UTF-8");
+		encryptedText = new String(Base64.encodeBase64(cipher.doFinal(bytes)));
 		
 		return encryptedText;
 	}

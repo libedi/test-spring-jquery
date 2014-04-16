@@ -23,15 +23,12 @@ function submitEncryptForm(username, password, rsaPublicKeyModulus, rsaPublicKey
 	var rsa = new RSAKey();
 	rsa.setPublic(rsaPublicKeyModulus, rsaPublicKeyExponent);
 	
-	var securedUsername = rsa.encrypt(username);
-	var securedPassword = rsa.encrypt(password);
-	
-	alert(securedUsername);
-	alert(hex2b64(securedUsername));
+	var securedUsername = hex2b64(rsa.encrypt(username));
+	var securedPassword = hex2b64(rsa.encrypt(password));
 	
 	$("#securedUsername").val(securedUsername);
 	$("#securedPassword").val(securedPassword);
 	
 	var securedForm = $("#securedForm");
-	//securedForm.submit();
+	securedForm.submit();
 }

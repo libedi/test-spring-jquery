@@ -1,12 +1,21 @@
 package control;
 
 import java.io.IOException;
+import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +30,7 @@ import util.FileUtil;
 import util.ImageUtil;
 import util.MailUtil;
 import util.MimeMailUtil;
+import util.RSAUtil;
 import util.TestProperty;
 import vo.FileVO;
 import vo.MailVO;
@@ -32,6 +42,7 @@ public class TestController extends MultiActionController {
 	private TestService testService;
 	private MailUtil mailUtil;
 	private MimeMailUtil mimeMailUtil;
+	private static int KEY_SIZE = 1024;
 	
 	public void setTestService(TestService testService) {
 		this.testService = testService;
@@ -256,6 +267,56 @@ public class TestController extends MultiActionController {
 		mimeMailUtil.sendMail(paramMail);
 		
 		mv.setViewName("mail_ok");
+		
+		return mv;
+	}
+	
+	/**
+	 * loginForm
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView loginForm(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		KeyPair keyPair = RSAUtil.generatorKeyPair();
+		
+		PublicKey publicKey = keyPair.getPublic();
+		PrivateKey privateKey = keyPair.getPrivate();
+		
+		// 세션에 복호화에 필요한 비밀키를 넣어서 전송한다.
+		HttpSession session = req.getSession();
+		session.setAttribute("__rsaPrivateKey__", privateKey);
+		
+		// 공개키를 문자열로 변환하여 Modulus와 Exponent 값을 전달한다.
+		RSAPublicKeySpec publicSpec = RSAUtil.getRSAPublicKeySpec(publicKey);
+		
+		String publicKeyModulus = publicSpec.getModulus().toString(16);
+		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+		
+		mv.addObject("publicKeyModulus", publicKeyModulus);
+		mv.addObject("publicKeyExponent", publicKeyExponent);
+		mv.setViewName("loginForm_rsa");
+		
+		return mv;
+	}
+	
+	/**
+	 * login
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView login(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		HttpSession session = req.getSession(true);
+		String privateKey = (String) session.getAttribute("__rsaPrivateKey__");
+		
+//		RSAUtil.decrypt(encryptedBase64Text, privateKey)
 		
 		return mv;
 	}

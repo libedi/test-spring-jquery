@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>·Î±×ÀÎ Æû - RSA ¾ÏÈ£È­ ¾Ë°í¸®Áò »ç¿ë</title>
+<title>ë¡œê·¸ì¸ í¼ - RSA ì•”í˜¸í™” ì•Œê³ ë¦¬ì¦˜ ì‚¬ìš©</title>
 <script type="text/javascript" src="script/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="script/encrypt/rsa/jsbn.js"></script>
 <script type="text/javascript" src="script/encrypt/rsa/rsa.js"></script>
@@ -12,16 +12,24 @@
 <script type="text/javascript" src="script/encrypt/rsa/rng.js"></script>
 <script type="text/javascript" src="script/encrypt/rsa/base64.js"></script>
 <script type="text/javascript" src="script/login.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#loginBtn").click(function(){
+		validateEncryptForm();
+	});
+});
+</script>
 </head>
 <body>
 <input type="hidden" name="rsaPublicKeyModulus" id="rsaPublicKeyModulus" value="${publicKeyModulus }"/>
-<input type="hidden" name="rsaPublicKeyExponent" id="rsaPublicKeyExponene" value="${publicKeyExponent }" />
-<div id="loginDiv">
-	<label for="username"><input type="text" name="username" id="username" /></label>
-	<label for="password"><input type="text" name="password" id="password" /></label>
-</div>
-<form id="securedForm" action="test.do?mode=login">
-	<input type="hidden" name="securedUsername" id="securedUserName" />
+<input type="hidden" name="rsaPublicKeyExponent" id="rsaPublicKeyExponent" value="${publicKeyExponent }" />
+
+<form id="securedForm" action="test.do?mode=login" method="post">
+	<label for="username">ID:<input type="text" name="username" id="username" /></label>
+	<label for="password">PW:<input type="password" name="password" id="password" /></label>
+	<input type="button" id="loginBtn" value="ë¡œê·¸ì¸"/>
+	<!-- encrypted data -->	
+	<input type="hidden" name="securedUsername" id="securedUsername" />
 	<input type="hidden" name="securedPassword" id="securedPassword" />
 </form>
 </body>

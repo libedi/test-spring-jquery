@@ -82,7 +82,7 @@ public class RSAUtil {
 	 */
 	public static String decrypt(String encryptedBase64Text, PrivateKey privateKey){
 		String decryptedText = null;
-		byte[] bytes = Base64.encodeBase64(encryptedBase64Text.getBytes());
+		byte[] bytes = Base64.decodeBase64(encryptedBase64Text.getBytes());
 		try {
 			Cipher cipher = Cipher.getInstance(RSA);
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);

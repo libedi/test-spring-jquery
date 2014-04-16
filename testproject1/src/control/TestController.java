@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -13,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -281,24 +286,37 @@ public class TestController extends MultiActionController {
 	public ModelAndView loginForm(HttpServletRequest req, HttpServletResponse res){
 		ModelAndView mv = new ModelAndView();
 		
-		KeyPair keyPair = RSAUtil.generatorKeyPair();
+		String publicKeyModulus = null;
+		String publicKeyExponent = null;
 		
-		PublicKey publicKey = keyPair.getPublic();
-		PrivateKey privateKey = keyPair.getPrivate();
+		KeyPair keyPair = null;
 		
-		// 세션에 복호화에 필요한 비밀키를 넣어서 전송한다.
-		HttpSession session = req.getSession();
-		session.setAttribute("__rsaPrivateKey__", privateKey);
-		
-		// 공개키를 문자열로 변환하여 Modulus와 Exponent 값을 전달한다.
-		RSAPublicKeySpec publicSpec = RSAUtil.getRSAPublicKeySpec(publicKey);
-		
-		String publicKeyModulus = publicSpec.getModulus().toString(16);
-		String publicKeyExponent = publicSpec.getPublicExponent().toString(16);
-		
-		log.debug("Public Key Modulus : " + publicKeyModulus);
-		log.debug("Public Key Exponent : " + publicKeyExponent);
-		
+		try {
+			keyPair = RSAUtil.generatorKeyPair();
+			
+			PublicKey publicKey = keyPair.getPublic();
+			PrivateKey privateKey = keyPair.getPrivate();
+			
+			// 세션에 복호화에 필요한 비밀키를 넣어서 전송한다.
+			HttpSession session = req.getSession();
+			session.setAttribute("__rsaPrivateKey__", privateKey);
+			
+			// 공개키를 문자열로 변환하여 Modulus와 Exponent 값을 전달한다.
+			RSAPublicKeySpec publicSpec = RSAUtil.getRSAPublicKeySpec(publicKey);
+			
+			publicKeyModulus = publicSpec.getModulus().toString(16);
+			publicKeyExponent = publicSpec.getPublicExponent().toString(16);
+			
+			log.debug("Public Key Modulus : " + publicKeyModulus);
+			log.debug("Public Key Exponent : " + publicKeyExponent);
+			
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		
 		mv.addObject("publicKeyModulus", publicKeyModulus);
 		mv.addObject("publicKeyExponent", publicKeyExponent);
@@ -326,11 +344,32 @@ public class TestController extends MultiActionController {
 		// 세션에서 개인키값을 제거 - 개인키 값이 유지되는 것을 방지
 		session.removeAttribute("__rsaPrivateKey__");
 		log.debug("username : "+ req.getParameter("securedUsername"));
-		String decryptedUsername = RSAUtil.decrypt(req.getParameter("securedUsername"), privateKey);
-		String decryptedPassword = RSAUtil.decrypt(req.getParameter("securedPassword"), privateKey);
 		
-		log.debug("Decrypted Username : " + decryptedUsername);
-		log.debug("Decrypted Password : " + decryptedPassword);
+		String decryptedUsername = null;
+		String decryptedPassword = null;
+		
+		try {
+			decryptedUsername = RSAUtil.decrypt(req.getParameter("securedUsername"), privateKey);
+			decryptedPassword = RSAUtil.decrypt(req.getParameter("securedPassword"), privateKey);
+			
+			log.debug("Decrypted Username : " + decryptedUsername);
+			log.debug("Decrypted Password : " + decryptedPassword);
+		
+		} catch (InvalidKeyException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		
 		if(username.equals(decryptedUsername) && password.equals(decryptedPassword)){
 			result = "match";

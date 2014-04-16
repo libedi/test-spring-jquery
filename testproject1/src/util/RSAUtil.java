@@ -1,5 +1,6 @@
 package util;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
@@ -30,16 +31,12 @@ public class RSAUtil {
 	private static final String RSA = "RSA";
 	private static final int KEY_SIZE = 1024;
 	
-	public static KeyPair generatorKeyPair(){
+	public static KeyPair generatorKeyPair() throws NoSuchAlgorithmException{
 		KeyPair keyPair = null;
 		
-		try {
-			KeyPairGenerator generator = KeyPairGenerator.getInstance(RSA);
-			generator.initialize(KEY_SIZE);
-			keyPair = generator.generateKeyPair();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+		KeyPairGenerator generator = KeyPairGenerator.getInstance(RSA);
+		generator.initialize(KEY_SIZE);
+		keyPair = generator.generateKeyPair();
 		return keyPair;
 	}
 	
@@ -50,25 +47,19 @@ public class RSAUtil {
 	 * @param text 암호화할 텍스트
 	 * @param publicKey	RSA 공개키
 	 * @return	Base64로 인코딩된 암호화 문자열
+	 * @throws NoSuchPaddingException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws InvalidKeyException 
+	 * @throws BadPaddingException 
+	 * @throws IllegalBlockSizeException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String encrypt(String text, PublicKey publicKey){
+	public static String encrypt(String text, PublicKey publicKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException{
 		String encryptedText = null;
 		byte[] bytes = text.getBytes();
-		try {
-			Cipher cipher = Cipher.getInstance(RSA);
-			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-			encryptedText = new String(Base64.encodeBase64(cipher.doFinal(bytes)));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
+		Cipher cipher = Cipher.getInstance(RSA);
+		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+		encryptedText = new String(Base64.encodeBase64(cipher.doFinal(bytes)), "UTF-8");
 		
 		return encryptedText;
 	}
@@ -79,25 +70,19 @@ public class RSAUtil {
 	 * @param encryptedBase64Text	Base64로 인코딩된 암호화 문자열
 	 * @param privateKey	RSA 개인키
 	 * @return	복호화된 텍스트
+	 * @throws NoSuchPaddingException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws InvalidKeyException 
+	 * @throws BadPaddingException 
+	 * @throws IllegalBlockSizeException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public static String decrypt(String encryptedBase64Text, PrivateKey privateKey){
+	public static String decrypt(String encryptedBase64Text, PrivateKey privateKey) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException{
 		String decryptedText = null;
 		byte[] bytes = Base64.decodeBase64(encryptedBase64Text.getBytes());
-		try {
-			Cipher cipher = Cipher.getInstance(RSA);
-			cipher.init(Cipher.DECRYPT_MODE, privateKey);
-			decryptedText = new String(cipher.doFinal(bytes));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
+		Cipher cipher = Cipher.getInstance(RSA);
+		cipher.init(Cipher.DECRYPT_MODE, privateKey);
+		decryptedText = new String(cipher.doFinal(bytes), "UTF-8");
 		return decryptedText;
 	}
 	
@@ -106,16 +91,12 @@ public class RSAUtil {
 	 * 
 	 * @param publicKey	공개키
 	 * @return	RSAPublicKeySpec
+	 * @throws NoSuchAlgorithmException 
+	 * @throws InvalidKeySpecException 
 	 */
-	public static RSAPublicKeySpec getRSAPublicKeySpec(PublicKey publicKey){
+	public static RSAPublicKeySpec getRSAPublicKeySpec(PublicKey publicKey) throws InvalidKeySpecException, NoSuchAlgorithmException {
 		RSAPublicKeySpec spec = null;
-		try {
-			spec = KeyFactory.getInstance(RSA).getKeySpec(publicKey, RSAPublicKeySpec.class);
-		} catch (InvalidKeySpecException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+		spec = KeyFactory.getInstance(RSA).getKeySpec(publicKey, RSAPublicKeySpec.class);
 		return spec;
 	}
 	
@@ -124,16 +105,12 @@ public class RSAUtil {
 	 * 
 	 * @param privateKey	개인키(비밀키)
 	 * @return	RSAPrivateKeySpec
+	 * @throws NoSuchAlgorithmException 
+	 * @throws InvalidKeySpecException 
 	 */
-	public static RSAPrivateKeySpec getRSAPrivateKeySpec(PrivateKey privateKey){
+	public static RSAPrivateKeySpec getRSAPrivateKeySpec(PrivateKey privateKey) throws InvalidKeySpecException, NoSuchAlgorithmException{
 		RSAPrivateKeySpec spec = null;
-		try {
-			spec = KeyFactory.getInstance(RSA).getKeySpec(privateKey, RSAPrivateKeySpec.class);
-		} catch (InvalidKeySpecException e) {
-			e.printStackTrace();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+		spec = KeyFactory.getInstance(RSA).getKeySpec(privateKey, RSAPrivateKeySpec.class);
 		return spec;
 	}
 	

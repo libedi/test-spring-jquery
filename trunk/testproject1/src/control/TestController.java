@@ -39,14 +39,14 @@ import vo.MailVO;
 public class TestController extends MultiActionController {
 	
 	private Log log = LogFactory.getLog(getClass());
-//	private TestService testService;
+	private TestService testService;
 	private MailUtil mailUtil;
 	private MimeMailUtil mimeMailUtil;
 	private static int KEY_SIZE = 1024;
 	
-//	public void setTestService(TestService testService) {
-//		this.testService = testService;
-//	}
+	public void setTestService(TestService testService) {
+		this.testService = testService;
+	}
 	public void setMailUtil(MailUtil mailUtil) {
 		this.mailUtil = mailUtil;
 	}
@@ -122,94 +122,94 @@ public class TestController extends MultiActionController {
 		return mv;
 	}
 	
-//	
-//	/**
-//	 * 
-//	 * @param req
-//	 * @param res
-//	 * @return
-//	 */
-//	public ModelAndView fileUpload(HttpServletRequest req, HttpServletResponse res){
-//		ModelAndView mv = new ModelAndView();
-//		
-//		log.debug("file Upload Start");
-//		
-//		String filePath = FileUtil.fileUploadController(req, "image", "upload");
-//		
-//		try {
-//			new ImageUtil().createThumbnail(filePath, 500, 0);
-//			this.testService.fileUpload(filePath);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		log.debug("upload path : " + filePath);
-//		
-//		mv.addObject("msg", filePath);
-//		mv.setViewName("upload_ok");
-//		
-//		return mv;
-//	}
-//	
-//	/**
-//	 * Ajax 파일 업로드
-//	 * 
-//	 * @param req
-//	 * @param res
-//	 * @return
-//	 */
-//	public ModelAndView ajaxFileUpload(HttpServletRequest req, HttpServletResponse res){
-//		ModelAndView mv = new ModelAndView();
-//		
-//		log.debug("ajax file upload start");
-//		
-//		String filePath = FileUtil.fileUploadController(req, "image", "upload");
-//		
-//		try {
-//			this.testService.fileUpload(filePath);
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		log.debug("upload path : " + filePath);
-//		
-//		mv.addObject("resultValue", filePath);
-//		mv.setViewName("result");
-//		
-//		return mv;
-//	}
-//	
-//	
-//	/**
-//	 * 파일 리스트 가져오기
-//	 * 
-//	 * @param req
-//	 * @param res
-//	 * @return
-//	 */
-//	public ModelAndView getFileList(HttpServletRequest req, HttpServletResponse res){
-//		ModelAndView mv = new ModelAndView();
-//		
-//		List<FileVO> resultList = new ArrayList<FileVO>();
-//		
-//		int page = Integer.parseInt( req.getParameter("page") );
-//		
-//		try {
-//			resultList = this.testService.getFileList(page);
-//			mv.addObject("list", resultList);
-//			mv.setViewName("file_download");
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		return mv;
-//	}
+	
+	/**
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView fileUpload(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		log.debug("file Upload Start");
+		
+		String filePath = FileUtil.fileUploadController(req, "image", "upload");
+		
+		try {
+			new ImageUtil().createThumbnail(filePath, 500, 0);
+			this.testService.fileUpload(filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		log.debug("upload path : " + filePath);
+		
+		mv.addObject("msg", filePath);
+		mv.setViewName("upload_ok");
+		
+		return mv;
+	}
+	
+	/**
+	 * Ajax 파일 업로드
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView ajaxFileUpload(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		log.debug("ajax file upload start");
+		
+		String filePath = FileUtil.fileUploadController(req, "image", "upload");
+		
+		try {
+			this.testService.fileUpload(filePath);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		log.debug("upload path : " + filePath);
+		
+		mv.addObject("resultValue", filePath);
+		mv.setViewName("result");
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * 파일 리스트 가져오기
+	 * 
+	 * @param req
+	 * @param res
+	 * @return
+	 */
+	public ModelAndView getFileList(HttpServletRequest req, HttpServletResponse res){
+		ModelAndView mv = new ModelAndView();
+		
+		List<FileVO> resultList = new ArrayList<FileVO>();
+		
+		int page = Integer.parseInt( req.getParameter("page") );
+		
+		try {
+			resultList = this.testService.getFileList(page);
+			mv.addObject("list", resultList);
+			mv.setViewName("file_download");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mv;
+	}
 	
 	public ModelAndView getProps(HttpServletRequest req, HttpServletResponse res){
 		ModelAndView mv = new ModelAndView();

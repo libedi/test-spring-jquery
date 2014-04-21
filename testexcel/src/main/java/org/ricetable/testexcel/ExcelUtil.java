@@ -1,9 +1,12 @@
 package org.ricetable.testexcel;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -109,6 +113,7 @@ public class ExcelUtil {
 		int rows = 0;
 		int cells = 0;
 		
+		// read one sheet
 //		int sheetNum = workbook.getNumberOfSheets();
 		sheet = workbook.getSheetAt(0);
 		rows = sheet.getPhysicalNumberOfRows();
@@ -147,6 +152,13 @@ public class ExcelUtil {
 		return resultRow;
 	}
 	
+	/**
+	 * Transfer Excel file to Text file
+	 * 
+	 * @param path
+	 * @return if success is true, but false
+	 * @throws Exception
+	 */
 	public boolean transferExcelToText(String path) throws Exception{
 		long startTime = System.currentTimeMillis();
 		if(path == null || path.equals("")){
@@ -174,20 +186,43 @@ public class ExcelUtil {
 		return true;
 	}
 
+	/**
+	 * get Workbook object for xls file
+	 * 
+	 * @param path
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	private Workbook getWorkbookXls(String path) throws FileNotFoundException, IOException {
 		POIFSFileSystem excel = new POIFSFileSystem(new FileInputStream(path));
 		return new HSSFWorkbook(excel);
 	}
 
+	/**
+	 * get Workbook object for xlsx file
+	 * 
+	 * @param path
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	private Workbook getWorkbookXlsx(String path) throws FileNotFoundException, IOException {
 		return new XSSFWorkbook(new FileInputStream(path));
 	}
 
+	/**
+	 * read Excel file data, and write Text file.
+	 * 
+	 * @param workbook
+	 * @throws IOException
+	 */
 	private void transferExcelFile(Workbook workbook) throws IOException {
 //		FileWriter fw = new FileWriter("c:/sujiewon/test/test_trans.txt");
 //		BufferedWriter bw = new BufferedWriter(fw);
 		
 		String tgPath = "c:/sujiewon/test/test_trans.txt";
+		// encoding UTF-8
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tgPath), "UTF-8"));
 		
 		Sheet sheet = null;
@@ -225,7 +260,7 @@ public class ExcelUtil {
 					}
 				}
 				if(c < cells-1){
-					bw.write("\t");
+					bw.write("|");
 				}
 				cell = null;
 			}
@@ -236,5 +271,171 @@ public class ExcelUtil {
 			bw.close();
 		}
 	}
+
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws IOException
+	 */
+	public boolean readText(String path) throws IOException {
+		if(path == null || path.isEmpty()){
+			throw new FileNotFoundException();
+		}
+		String dest = "c:/sujiewon/test/test_trans_copy.txt";
+		boolean result = copyText(path, dest);
+		
+		return result;
+	}
+
+	/**
+	 * 
+	 * @param src
+	 * @param dest
+	 * @return
+	 * @throws IOException
+	 */
+	private boolean copyText(String src, String dest) throws IOException {
+		FileReader fr = null;
+		BufferedReader br = null;
+		
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		
+		try{
+			fr = new FileReader(src);
+			br = new BufferedReader(fr);
+			
+			fw = new FileWriter(dest, false);	// append false.
+			bw = new BufferedWriter(fw);
+//			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dest), "UTF-8"));
+			
+			String tempStr  = null;
+			
+			while((tempStr = br.readLine()) != null){
+				String[] spStr = tempStr.split("[|]");
+				for(int i=0; i<spStr.length; i++){
+					bw.write(spStr[i]);
+//					System.out.println(spStr[i]);
+					if(i < (spStr.length - 1)){
+						bw.write("|");
+					}
+				}
+				bw.newLine();
+			}
+		} catch(IOException e){
+			throw e;
+		} finally {
+			if(br != null) try{br.close();} catch(IOException e){throw e;}
+			if(fr != null) try{fr.close();} catch(IOException e){throw e;}
+			if(bw != null) try{bw.close();} catch(IOException e){throw e;}
+			if(fw != null) try{fw.close();} catch(IOException e){throw e;}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Create Workbook object
+	 * 
+	 * @param fileExt
+	 * @return
+	 * @throws Exception
+	 */
+	private Workbook createWorkbook(String fileExt) throws Exception {
+		Workbook workbook = null;
+		if(fileExt == null || fileExt.equals("")){
+			throw new Exception("invalid file type.(Not Excel file)");
+		}
+		if(fileExt.equals("xls")){
+			workbook = new HSSFWorkbook();
+		} else if(fileExt.equals("xlsx")) {
+			workbook = new XSSFWorkbook();
+		}
+		return workbook;
+	}
+
+	/**
+	 * Transfer text file to excel file
+	 * 
+	 * @param src	Text file path
+	 * @param dest	Excel file path
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean transferTextToExcel(String src, String dest) throws Exception {
+		if(src == null || src.equals("")){
+			throw new FileNotFoundException();
+		}
+		boolean result = true;
+		String fileExt = dest.substring(src.lastIndexOf(".") + 1).toLowerCase();
+		if(fileExt != null && !dest.isEmpty()){
+			Workbook workbook = null;
+			if(fileExt.equals("xls") || fileExt.equals("xlsx")){
+				workbook = createWorkbook(fileExt);
+			} else {
+				throw new Exception("invalid file type.(Not excel file)");
+			}
+			
+			result = transferTextToExcel(src, dest, workbook);
+		}
+		return result;
+	}
+
+	/**
+	 * Transfer text file to excel file
+	 * 
+	 * @param src	Text file path
+	 * @param dest	Excel file path
+	 * @param workbook	Workbook Object
+	 * @return
+	 * @throws IOException
+	 */
+	public boolean transferTextToExcel(String src, String dest, Workbook workbook) throws IOException {
+		
+		FileReader fr = null;
+		BufferedReader br = null;
+		FileOutputStream fs = null;
+		
+		// create sheet
+		Sheet sheet = workbook.createSheet();
+		Row row = null;
+		Cell cell = null;
+		
+		// config cell style
+		CellStyle style = workbook.createCellStyle();
+		style.setBorderBottom(CellStyle.BORDER_THIN);
+		style.setBorderLeft(CellStyle.BORDER_THIN);
+		style.setBorderRight(CellStyle.BORDER_THIN);
+		style.setBorderTop(CellStyle.BORDER_THIN);
+		
+		int rowCount = 0;
+		
+		try {
+			fr = new FileReader(src);
+			br = new BufferedReader(fr);
+			fs = new FileOutputStream(dest);
+			
+			String tempStr = "";
+			while((tempStr = br.readLine()) != null){
+				row = sheet.createRow(rowCount++);
+				String[] spStr = tempStr.split("[|]");
+				for(int i=0; i<spStr.length; i++){
+					cell = row.createCell(i);
+					cell.setCellStyle(style);
+					cell.setCellValue(spStr[i]);
+				}
+			}
+			workbook.write(fs);
+			
+		} catch (IOException e) {
+			throw e;
+		} finally {
+			if(fs != null) try{fs.close();}catch(IOException e){throw e;}
+		}
+		
+		return true;
+	}
+
 	
 }

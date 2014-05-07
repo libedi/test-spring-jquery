@@ -37,5 +37,6 @@ if( navigator.platform  ){
 	<a href="test.do?mode=getFileList&page=1">File 다운로드 테스트</a>
 	<a href="board.do?mode=getBoardList&page=1">게시판 테스트</a>
 	<a href="test.do?mode=loginForm">로그인페이지 암호화 테스트</a>
+	<a href="bootstrap_CSS.html">부트스트랩 CSS 테스트</a>
 </body>
 </html>

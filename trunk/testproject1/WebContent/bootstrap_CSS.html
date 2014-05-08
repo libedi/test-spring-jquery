@@ -314,6 +314,102 @@
 		</div>
 	</form>
 </div>
+<div class="container">
+	<h2>예제<small>-버튼 스타일-</small></h2>
+	<form role="form">
+		<!-- 기본 버튼 -->
+		<input type="button" class="btn btn-default" value="Default" />
+		
+		<!-- 보기에 무게감을 주어 버튼들중에서 중요한 액션을 알아볼 수 있게끔 합니다. -->
+		<input type="button" class="btn btn-primary" value="Primary" />
+		
+		<!-- 성공적이거나 긍정적인 액션을 가리킵니다. -->
+		<input type="button" class="btn btn-success" value="Success" />
+		
+		<!-- 정보를 제공하는 경보 메시지를 위한 맥락적인 버튼 -->
+		<input type="button" class="btn btn-info" value="Info" />
+		
+		<!-- 이 액션은 조심해야 함을 가리킵니다. -->
+		<input type="button" class="btn btn-warning" value="Warning" />
+		
+		<!-- 위험하거나 부정적일 수 있는 액션을 가리킵니다. -->
+		<input type="button" class="btn btn-danger" value="Danger" />
+		
+		<!-- 버튼을 버튼 동작은 유지하면서 링크와 같은 모양으로 만들어 덜 중요하게 보이게 합니다. -->
+		<input type="button" class="btn btn-link" value="Link" />
+	</form>
+</div>
+<div class="container">
+	<h2>예제<small>-버튼 크기-</small></h2>
+	<form role="form">
+		<p>
+			<input type="button" class="btn btn-primary btn-lg" value="Large button" />
+			<input type="button" class="btn btn-default btn-lg" value="Large button" />
+		</p>
+		<p>
+			<input type="button" class="btn btn-primary" value="Default button" />
+			<input type="button" class="btn btn-default" value="Default button" />
+		</p>
+		<p>
+			<input type="button" class="btn btn-primary btn-sm" value="Small button" />
+			<input type="button" class="btn btn-default btn-sm" value="Small button" />
+		</p>
+		<p>
+			<input type="button" class="btn btn-primary btn-xs" value="Extra small button" />
+			<input type="button" class="btn btn-default btn-xs" value="Extra small button" />
+		</p>
+	</form>
+</div>
+<div class="container">
+	<h2>예제<small>-블록레벨 버튼-</small></h2>
+	<form role="form">
+		<div class="col-lg-4">
+			<!-- .btn-block을 사용하여 상위 요소의 너비에 맞춰 꽉 채운다. -->
+			<button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+			<button type="button" class="btn btn-default btn-lg btn-block">Block level button</button>
+		</div>
+	</form>
+</div>
+<div class="container">
+	<h2>예제<small>-버튼 비활성화 상태-</small></h2>
+	<form role="form">
+		<!-- disabled 속성을 추가하여, 버튼을 50% 흐리게 만들어 클릭할 수 없는 것처럼 만든다. -->
+		<input type="button" class="btn btn-lg btn-primary" value="Primary button" disabled />
+		<button type="button" class="btn btn-default btn-lg" disabled >Button</button>
+	</form>
+</div>
+<div class="container">
+	<h2>예제<small>-앵커 비활성화 상태-</small></h2>
+	<form role="form">
+		<!-- .disabled 를 추가한다. 링크 기능성은 영향을 받지 않는다. -->
+		<a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link</a>
+		<a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a>
+	</form>
+</div>
+<div class="container">
+	<h2>예제<small>-다양한 버튼 태그-</small></h2>
+	<form role="form">
+		<!-- 크로스 브라우저 렌더링을 위해 button 태그를 추천 -->
+		<a class="btn btn-default" href="#" role="button">Link</a>
+		<button class="btn btn-default" type="submit">Button</button>
+		<input class="btn btn-default" type="button" value="Input">
+		<input class="btn btn-default" type="submit" value="Submit">
+	</form>
+</div>
+<div class="container">
+	<h2>예제<small>-이미지-</small></h2>
+	<form role="form">
+		<!-- IE8 에서는 둥근모서리가 지원되지 않음. -->
+		<img src="img/test.png" alt="테스트이미지" class="img-rounded">
+		<img src="img/test.png" alt="테스트이미지" class="img-circle">
+		<img src="img/test.png" alt="테스트이미지" class="img-thumbnail">
+		
+		<!-- .img-responsive 를 사용하여 반응형 이미지 적용. 부모요소에 맞추어 자동조절. -->
+		<div class="col-lg-2">
+			<img src="img/test.png" alt="테스트이미지" class="img-responsive">
+		</div>
+	</form>
+</div>
 
 <!-- JQuery :: before Bootstrap -->
 <script type="text/javascript" src="script/jquery-1.11.0.min.js"></script>

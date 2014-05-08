@@ -1,9 +1,10 @@
 package org.ricetable.testexcel;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,11 +20,13 @@ public class TestExcel {
 		assertEquals(ExcelUtil.getInstance(), util);
 	}
 	
+	@Test
 	public void testReadExcel(){
 		testMakeObject();
-		String path = "c:/sujiewon/test/test.xlsx";
+		String path = "c:/sujiewon/test/test_65k.xlsx";
+		File file = new File(path);
 		try {
-			ArrayList<ArrayList<String>> list = util.readExcel(path);
+			ArrayList<ArrayList<String>> list = util.readExcelFile(file);
 			for(ArrayList<String> row : list){
 				for(String cell : row){
 					System.out.print(cell + " ");
@@ -40,22 +43,24 @@ public class TestExcel {
 	
 	public void testTransFile(){
 		testMakeObject();
-		String path1 = "c:/sujiewon/test/test_100k.xlsx";
-		String path2 = "c:/sujiewon/test/test_500k.xlsx";
+		String src1 = "c:/sujiewon/test/test_100k.xlsx";
+		String src2 = "c:/sujiewon/test/test_500k.xlsx";
+		
+		String dest = "c:/sujiewon/test/test_trans.txt";
 		try {
-			if(util.transferExcelToText(path2)){
+			if(util.transferExcelToText(src2, dest)){
 				assertTrue("파일생성완료", true);
 			}
 //			if(util.transferExcelToText(path2)){
 //				assertTrue("파일생성완료", true);
 //			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail();
 		}
 	}
-	@Test
+	
+	
 	public void testMakeTextFile(){
 		testMakeObject();
 		String src = "c:/sujiewon/test/test_trans.txt";

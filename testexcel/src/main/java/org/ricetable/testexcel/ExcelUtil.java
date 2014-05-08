@@ -2,6 +2,7 @@ package org.ricetable.testexcel;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -51,22 +52,15 @@ public class ExcelUtil {
 	 * @return	2-dimension array list
 	 * @throws Exception 
 	 */
-	public ArrayList<ArrayList<String>> readExcel(String path) throws Exception {
-		if(path == null || path.equals("")){
+	public ArrayList<ArrayList<String>> readExcelFile(File file) throws Exception {
+		if(file == null || !file.isFile()){
 			throw new FileNotFoundException();
 		}
 		
 		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-		String fileExt = path.substring(path.lastIndexOf(".") + 1);
-		if(fileExt != null && !path.isEmpty()){
-			if(fileExt.toLowerCase().equals("xls")){				// xls file
-				result = readXlsFile(path);
-			} else if(fileExt.toLowerCase().equals("xlsx")){		// xlsx file
-				result = readXlsxFile(path);
-			} else {
-				throw new Exception("invalid file type.(Not excel file)");
-			}
-		}
+		Workbook workbook = getWorkbook(file);
+		result = getExcelData(workbook);
+		
 		return result;
 	}
 
@@ -79,32 +73,29 @@ public class ExcelUtil {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	private ArrayList<ArrayList<String>> readXlsFile(String path) throws FileNotFoundException, IOException {
-		POIFSFileSystem excel = new POIFSFileSystem(new FileInputStream(path));
-		HSSFWorkbook workbook = new HSSFWorkbook(excel);
-		return readWorkbook(workbook);
+	private Workbook getWorkbook(File file) throws FileNotFoundException, IOException {
+		Workbook workbook = null;
+		
+		String filePath = file.getCanonicalPath();
+		String fileExt = filePath.substring(filePath.lastIndexOf(".") + 1).toLowerCase();
+		if(fileExt != null && !fileExt.isEmpty()){
+			if(fileExt.equals("xls")){
+				workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(file)));
+			} else if(fileExt.equals("xlsx")){
+				workbook = new XSSFWorkbook(new FileInputStream(file));
+			}
+		}
+		
+		return workbook;
 	}
 
-	/**
-	 * Read xlsx file
-	 * 
-	 * @param path	file path
-	 * @return	2-dimension array list
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	private ArrayList<ArrayList<String>> readXlsxFile(String path) throws FileNotFoundException, IOException {
-		XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(path));
-		return readWorkbook(workbook);
-	}
-	
 	/**
 	 * Read workbook<br/>
 	 * - read only single sheet
 	 * @param workbook	Workbook
 	 * @return	2-dimension array list
 	 */
-	private ArrayList<ArrayList<String>> readWorkbook(Workbook workbook) {
+	private ArrayList<ArrayList<String>> getExcelData(Workbook workbook) {
 		ArrayList<ArrayList<String>> resultRow = null;
 		ArrayList<String> resultCell = null;
 		Sheet sheet = null;
@@ -116,7 +107,7 @@ public class ExcelUtil {
 		// read one sheet
 //		int sheetNum = workbook.getNumberOfSheets();
 		sheet = workbook.getSheetAt(0);
-		rows = sheet.getPhysicalNumberOfRows();
+		rows = (sheet.getPhysicalNumberOfRows() < 5) ? sheet.getPhysicalNumberOfRows() : 5;
 		
 		resultRow = new ArrayList<ArrayList<String>>();
 		for(int r=0; r < rows; r++){
@@ -159,29 +150,24 @@ public class ExcelUtil {
 	 * @return if success is true, but false
 	 * @throws Exception
 	 */
-	public boolean transferExcelToText(String path) throws Exception{
-		long startTime = System.currentTimeMillis();
-		if(path == null || path.equals("")){
+	public boolean transferExcelToText(String src, String dest) throws Exception{
+		if(src == null || src.equals("")){
 			throw new FileNotFoundException();
 		}
 		
-		String fileExt = path.substring(path.lastIndexOf(".") + 1);
-		if(fileExt != null && !path.isEmpty()){
+		String fileExt = src.substring(src.lastIndexOf(".") + 1);
+		if(fileExt != null && !src.isEmpty()){
 			Workbook workbook = null;
 			if(fileExt.toLowerCase().equals("xls")){				// xls file
-				workbook = getWorkbookXls(path);
+				workbook = getWorkbookXls(src);
 			} else if(fileExt.toLowerCase().equals("xlsx")){		// xlsx file
-				workbook = getWorkbookXlsx(path);
+				workbook = getWorkbookXlsx(src);
 			} else {
 				throw new Exception("invalid file type.(Not excel file)");
 			}
 			
-			transferExcelFile(workbook);
+			transferExcelToText(dest, workbook);
 		}
-		long endTime = System.currentTimeMillis();
-		
-		double time = ((double)(endTime - startTime)) / 1000;
-		System.out.println(time + " sec");
 		
 		return true;
 	}
@@ -217,13 +203,13 @@ public class ExcelUtil {
 	 * @param workbook
 	 * @throws IOException
 	 */
-	private void transferExcelFile(Workbook workbook) throws IOException {
+	private void transferExcelToText(String dest, Workbook workbook) throws IOException {
 //		FileWriter fw = new FileWriter("c:/sujiewon/test/test_trans.txt");
 //		BufferedWriter bw = new BufferedWriter(fw);
 		
-		String tgPath = "c:/sujiewon/test/test_trans.txt";
+//		String tgPath = "c:/sujiewon/test/test_trans.txt";
 		// encoding UTF-8
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tgPath), "UTF-8"));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(dest), "UTF-8"));
 		
 		Sheet sheet = null;
 		Row row = null;

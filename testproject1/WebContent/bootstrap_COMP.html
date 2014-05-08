@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Component Test</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="container">
+	<h2>Glyphicons</h2>
+	<button type="button" class="btn btn-default">
+		<span class="glyphicon glyphicon-sort" ></span> 정렬
+	</button>
+	
+	<!-- .btn-group 을 사용하여 버튼을 묶을 수 있다. -->
+	<div class="btn-group">
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-align-left"></span>
+		</button>
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-align-center"></span>
+		</button>
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-align-right"></span>
+		</button>
+		<button type="button" class="btn btn-default">
+			<span class="glyphicon glyphicon-align-justify"></span>
+		</button>
+	</div>
+	
+	<h2>드롭다운</h2>
+	<!-- .dropdown 밑에 .dropdown-toggle 와 .dropdown-menu 형식-->
+	<div class="dropdown">
+		<a id="dropdownMenu1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+			<li role="presentation" class="divider"></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+		</ul>
+	</div>
+	
+	<h2>드롭다운 우측정렬</h2>
+	<div class="dropdown">
+		<a id="dLabel" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+		<!-- .dropdown-menu에 .pull-right 추가 -->
+		<ul class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+			<li role="presentation" class="divider"></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+		</ul>
+	</div>
+	
+	<h2>드롭다운 헤더</h2>
+	<div class="dropdown">
+		<a id="dropdownMenu2" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+			<!-- .dropdown-header 추가 -->
+			<li role="presentation" class="dropdown-header">Dropdown header</li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+			<li role="presentation" class="divider"></li>
+			<li role="presentation" class="dropdown-header">Dropdown header</li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+		</ul>
+	</div>
+	
+	<h2>드롭다운 메뉴 비활성화</h2>
+	<div class="dropdown">
+		<a id="dropdownMenu3" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu3">
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Regular link</a></li>
+			<!-- li 태그에 .disabled 추가 -->
+			<li role="presentation" class="disabled"><a role="menuitem" tabindex="-1" href="#">Disabled link</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another link</a></li>
+		</ul>
+	</div>
+	
+	<h2>버튼 그룹</h2>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default">Left</button>
+		<button type="button" class="btn btn-default">Middle</button>
+		<button type="button" class="btn btn-default">Center</button>
+	</div>
+	
+	<h2>버튼 툴바</h2>
+	<div class="btn-toolbar">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">1</button>
+			<button type="button" class="btn btn-default">2</button>
+			<button type="button" class="btn btn-default">3</button>
+			<button type="button" class="btn btn-default">4</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">5</button>
+			<button type="button" class="btn btn-default">6</button>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">7</button>
+			<button type="button" class="btn btn-default">8</button>
+			<button type="button" class="btn btn-default">9</button>
+		</div>
+	</div>
+	
+	<h2>버튼 그룹 크기 조절</h2>
+	<!-- .btn-group에 .btn-group-* 를 추가 -->
+	<div class="btn-toolbar">
+		<div class="btn-group btn-group-lg">
+			<button type="button" class="btn btn-default">Left</button>
+			<button type="button" class="btn btn-default">Middle</button>
+			<button type="button" class="btn btn-default">Center</button>
+		</div>
+	</div>
+	<br/>
+	<div class="btn-toolbar">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default">Left</button>
+			<button type="button" class="btn btn-default">Middle</button>
+			<button type="button" class="btn btn-default">Center</button>
+		</div>
+	</div>
+	<br/>
+	<div class="btn-toolbar">
+		<div class="btn-group btn-group-sm">
+			<button type="button" class="btn btn-default">Left</button>
+			<button type="button" class="btn btn-default">Middle</button>
+			<button type="button" class="btn btn-default">Center</button>
+		</div>
+	</div>
+	<br/>
+	<div class="btn-toolbar">
+		<div class="btn-group btn-group-xs">
+			<button type="button" class="btn btn-default">Left</button>
+			<button type="button" class="btn btn-default">Middle</button>
+			<button type="button" class="btn btn-default">Center</button>
+		</div>
+	</div>
+	
+	<h2>중첩하기</h2>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default">1</button>
+		<button type="button" class="btn btn-default">2</button>
+		
+		<!--
+			버튼 그룹에 드롭다운을 추가할 경우
+			.dropdown 이 아니라, .btn-group 을 중첩하여 사용한다.
+			.dropdown 을 사용하면 버튼 그룹이 형성이 안됨.
+		 -->
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				Dropdown <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Dropdown link</a></li>
+				<li><a href="#">Dropdown link</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<h2>버튼 그룹을 수직으로 변형</h2>
+	<!-- .btn-group-vertical 사용 -->
+	<div class="btn-group-vertical">
+		<button type="button" class="btn btn-default">Button</button>
+		<button type="button" class="btn btn-default">Button</button>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				Dropdown <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Dropdown link</a></li>
+				<li><a href="#">Dropdown link</a></li>
+			</ul>
+		</div>
+		<button type="button" class="btn btn-default">Button</button>
+		<button type="button" class="btn btn-default">Button</button>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				Dropdown <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Dropdown link</a></li>
+				<li><a href="#">Dropdown link</a></li>
+			</ul>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				Dropdown <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Dropdown link</a></li>
+				<li><a href="#">Dropdown link</a></li>
+			</ul>
+		</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				Dropdown <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">Dropdown link</a></li>
+				<li><a href="#">Dropdown link</a></li>
+			</ul>
+		</div>
+	</div>
+	
+	<h2>양쪽정렬로 변형(링크태그에서만 작동)</h2>
+	<!-- a 태그에서만 작동하며, 상위 태그의 너비에 맞춘다. -->
+	<div class="col-lg-3">
+		<div class="btn-group btn-group-justified">
+			<a href="#" class="btn btn-default">Left</a>
+			<a href="#" class="btn btn-default">Middle</a>
+			<a href="#" class="btn btn-default">Right</a>
+		</div>
+	</div>
+	
+</div>	<!-- .container END -->
+<script type="text/javascript" src="script/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>

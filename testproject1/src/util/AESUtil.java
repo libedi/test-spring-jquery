@@ -17,6 +17,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * AES Encrypt Alogorithm
+ * 
+ * @author Park Sang Jun
+ *
+ */
 public class AESUtil {
 	private static final int KEY_SIZE_128 = 128;
 	// AES-CBC-256 암호화를 위한

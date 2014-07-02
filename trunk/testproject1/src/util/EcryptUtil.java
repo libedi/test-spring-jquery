@@ -16,7 +16,7 @@ public class EcryptUtil {
 		MessageDigest md = null;
 		
 		try{
-			md = MessageDigest.getInstance("SHA1");
+			md = MessageDigest.getInstance("SHA-256");
 		} catch(NoSuchAlgorithmException e){
 			e.printStackTrace();
 		}
@@ -42,6 +42,6 @@ public class EcryptUtil {
 		String enc = eu.encryptToSha1(password);
 		System.out.println(enc);
 		System.out.println(enc.length());
-		System.out.println(enc.equals("7ce0359f12857f2a90c7de465f40a95f1cb5da9"));
+		System.out.println(enc.equals("e9cee71ab932fde863338d8be4de9dfe39ea049bdafb342ce659ec545b69ae"));
 	}
 }

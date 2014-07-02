@@ -20,7 +20,7 @@ public class TestProperty {
 		if(cl == null){
 			cl = ClassLoader.getSystemClassLoader();
 		}
-		URL url = cl.getResource("");
+		URL url = cl.getResource(FILE);
 		
 //		System.out.println(url.getPath());
 		
@@ -31,7 +31,7 @@ public class TestProperty {
 		try {
 			
 //			fis = new FileInputStream(FILE);
-			fis = new FileInputStream(url.getPath() + File.separator + FILE);
+			fis = new FileInputStream(url.getPath());
 			
 			props.load(new BufferedInputStream(fis));
 			value = props.getProperty(keyName).trim();
